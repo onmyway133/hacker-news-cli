@@ -1,4 +1,4 @@
-# hackernews
+# hacker-news
 
 Terminal Hacker News reader built with Bun + TypeScript + Ink.
 
@@ -7,20 +7,25 @@ Two-pane layout with story list, article preview, and full-screen comment thread
 ## Install
 
 ```sh
-npm install -g @onmyway133/hackernews
-# or
-bun install -g @onmyway133/hackernews
+bun add -g @onmyway133/hacker-news
 ```
 
 ## Usage
 
 ```sh
-hackernews           # Open front page
-hackernews new       # New stories
-hackernews ask       # Ask HN
-hackernews show      # Show HN
-hackernews jobs      # Jobs
-hackernews best      # Best stories
+bunx @onmyway133/hacker-news           # Open front page
+bunx @onmyway133/hacker-news new       # New stories
+bunx @onmyway133/hacker-news ask       # Ask HN
+bunx @onmyway133/hacker-news show      # Show HN
+bunx @onmyway133/hacker-news jobs      # Jobs
+bunx @onmyway133/hacker-news best      # Best stories
+```
+
+Or if installed globally:
+
+```sh
+hacker-news
+hacker-news new
 ```
 
 ## Keyboard Shortcuts
@@ -73,12 +78,12 @@ hackernews best      # Best stories
 
 ```sh
 git clone <repo>
-cd hackernews
+cd hacker-news-cli
 bun install
 bun run dev
 ```
 
 ```sh
 bun run build      # Build to dist/
-./bin/hackernews   # Run built binary
+./bin/hacker-news  # Run built binary
 ```
