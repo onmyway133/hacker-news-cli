@@ -20,10 +20,10 @@ function getFeedArg(): Feed {
 
 if (args.includes('--help') || args.includes('-h')) {
   console.log(`
-hackernews — Terminal Hacker News reader
+hacker-news — Terminal Hacker News reader
 
 Usage:
-  hackernews [feed] [options]
+  hacker-news [feed] [options]
 
 Feeds:
   top     Front page stories (default)
@@ -65,6 +65,12 @@ const { unmount } = render(
   { exitOnCtrlC: false }
 );
 
-process.on('exit', () => {
+function cleanup() {
+  // Ensure mouse tracking is disabled even if React cleanup doesn't run
+  process.stdout.write('\x1b[?1003l\x1b[?1006l');
   try { cache.close(); } catch {}
-});
+}
+
+process.on('exit', cleanup);
+process.on('SIGINT', () => { cleanup(); process.exit(0); });
+process.on('SIGTERM', () => { cleanup(); process.exit(0); });

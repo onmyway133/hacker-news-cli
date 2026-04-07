@@ -13,12 +13,12 @@ interface Props {
 }
 
 export function StoryList({ stories, selectedIndex, readIds, width, height, isActive }: Props) {
-  // Each story takes 2 lines; reserve 2 for border+title
-  const visibleCount = Math.max(2, Math.floor((height - 2) / 2));
+  // Fixed rows inside border: title(1) + separator(1) + scroll-indicator(1) = 3
+  // Each story takes 2 lines
+  const visibleCount = Math.max(2, Math.floor((height - 5) / 2));
   const scrollOffset = calcScrollOffset(selectedIndex, visibleCount, stories.length);
   const visible = stories.slice(scrollOffset, scrollOffset + visibleCount);
 
-  // Available width inside border (2 chars for left+right border, 1 for padding each side)
   const innerWidth = width - 4;
 
   return (
@@ -30,11 +30,16 @@ export function StoryList({ stories, selectedIndex, readIds, width, height, isAc
       borderColor={isActive ? 'white' : 'gray'}
       overflow="hidden"
     >
-      <Box paddingX={1}>
+      {/* Title row with search hint */}
+      <Box paddingX={1} justifyContent="space-between">
         <Text bold color={isActive ? 'white' : 'gray'}>
           STORIES {stories.length > 0 ? `(${stories.length})` : ''}
         </Text>
+        {isActive && <Text color="gray"> /search </Text>}
       </Box>
+
+      {/* Separator */}
+      <Text> </Text>
 
       {visible.map((story, i) => {
         const idx = scrollOffset + i;
@@ -42,7 +47,6 @@ export function StoryList({ stories, selectedIndex, readIds, width, height, isAc
         const isRead = readIds.has(story.id);
         const color = scoreColor(story.score);
 
-        // Truncate title to fit
         const prefix = `${idx + 1}. `;
         const maxTitleLen = Math.max(10, innerWidth - 4);
         const title = story.title.length > maxTitleLen
@@ -60,27 +64,27 @@ export function StoryList({ stories, selectedIndex, readIds, width, height, isAc
             <Box flexDirection="row">
               <Text
                 color={isSelected ? 'black' : isRead ? 'gray' : 'white'}
-                backgroundColor={isSelected ? 'cyan' : undefined}
+                backgroundColor={isSelected ? 'blue' : undefined}
                 bold={isSelected}
                 dimColor={isRead && !isSelected}
               >
-                {isSelected ? '▶' : ' '} {prefix}{title}{typeTag}
+                {isSelected ? '▶ ' : '  '}{prefix}{title}{typeTag}
               </Text>
             </Box>
             {/* Line 2: score + author + time + comments */}
             <Box flexDirection="row" paddingLeft={3}>
               <Text
                 color={isSelected ? 'black' : isRead ? 'gray' : color}
-                backgroundColor={isSelected ? 'cyan' : undefined}
+                backgroundColor={isSelected ? 'blue' : undefined}
                 dimColor={isRead && !isSelected}
               >
                 ▲{story.score}
               </Text>
               <Text
                 color={isSelected ? 'black' : 'gray'}
-                backgroundColor={isSelected ? 'cyan' : undefined}
+                backgroundColor={isSelected ? 'blue' : undefined}
               >
-                {' '}by {story.by}  {timeAgo(story.time)}  {story.descendants}c
+                {'  '}by {story.by}  ·  {timeAgo(story.time)}  ·  {story.descendants ?? 0}c
               </Text>
             </Box>
           </Box>
@@ -88,7 +92,7 @@ export function StoryList({ stories, selectedIndex, readIds, width, height, isAc
       })}
 
       {stories.length === 0 && (
-        <Box paddingX={2} paddingY={1}>
+        <Box paddingX={2}>
           <Text color="gray">No stories</Text>
         </Box>
       )}
@@ -97,7 +101,7 @@ export function StoryList({ stories, selectedIndex, readIds, width, height, isAc
       {stories.length > visibleCount && (
         <Box paddingX={1}>
           <Text color="gray" dimColor>
-            {scrollOffset + visibleCount < stories.length ? '▼ more' : '─ end'}
+            {' '}↑↓ {scrollOffset + 1}–{Math.min(scrollOffset + visibleCount, stories.length)}/{stories.length}
           </Text>
         </Box>
       )}

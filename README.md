@@ -4,6 +4,8 @@ Terminal Hacker News reader built with Bun + TypeScript + Ink.
 
 Two-pane layout with story list, article preview, and full-screen comment threads.
 
+![](images/hackernews.png)
+
 ## Install
 
 ```sh
