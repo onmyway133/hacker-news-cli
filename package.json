@@ -1,9 +1,9 @@
 {
   "name": "@onmyway133/hacker-news",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Terminal Hacker News reader — stories, comments, and article previews in your terminal",
   "bin": {
-    "hackernews": "./dist/index.js"
+    "hacker-news": "./dist/index.js"
   },
   "type": "module",
   "scripts": {
