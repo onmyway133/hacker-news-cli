@@ -1,6 +1,6 @@
 {
   "name": "@onmyway133/hacker-news",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "Terminal Hacker News reader — stories, comments, and article previews in your terminal",
   "bin": {
     "hacker-news": "./dist/index.js"
