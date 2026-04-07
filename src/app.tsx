@@ -170,6 +170,7 @@ export default function App({ cache, initialFeed, initialSearch }: Props) {
     }
     if (searchActive) {
       // TextInput handles character input; we only handle special keys
+      if (key.ctrl && input === 'c') process.exit(0);
       if (key.escape) {
         setSearchActive(false);
         setSearchQuery('');
@@ -179,7 +180,7 @@ export default function App({ cache, initialFeed, initialSearch }: Props) {
       return;
     }
     handleBrowseInput(input, key);
-  }, { isActive: mode === 'comments' || !searchActive });
+  }, { isActive: true });
 
   function handleBrowseInput(input: string, key: { upArrow: boolean; downArrow: boolean; leftArrow: boolean; rightArrow: boolean; tab: boolean; return: boolean; escape: boolean; ctrl: boolean }) {
     // Quit
